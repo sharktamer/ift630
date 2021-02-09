@@ -1,0 +1,2 @@
+type philosophes = monitor
+  var etat : array [3] of (pense, afaim, mange)
