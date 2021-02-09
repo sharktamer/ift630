@@ -1,22 +1,22 @@
 resource philo()
 
-  sem baguette[5] := (1, [4] 0)
-  procedure phil(i: int)
+  sem baguette[5] := ([5] 1)
+  process phil(i := 0 to 4)
      var j := 0
      do j < 10 ->
-       P(baguette[i])
-       P(baguette[(i+1) mod 5])
+       P(baguette[i+1])
+       P(baguette[(i+1) mod 5 + 1])
        write("Philosophe", i, "mange")
        nap(100)
-       V(baguette[i])
-       V(baguette[(i+1) mod 5])
+       V(baguette[i+1])
+       V(baguette[(i+1) mod 5 + 1])
        write("Philosophe", i, "pense")
        nap(300)
-     j++
+       j++
      od
   end
-  begin
-    co (i := 5 to 5) phil(i)
-    oc
-  end
+  #begin
+  #  co (i := 5 to 5) phil(i)
+  #  oc
+  #end
 end

@@ -1,4 +1,4 @@
-/* srl info for test */
+/* srl info for philosopheMoniteur */
 
 #include "/usr/local/lib/sr/srmulti.h"
 #include "/usr/local/lib/sr/sr.h"
