@@ -18,11 +18,11 @@ int sr_stack_size = 40000;
 int sr_async_flag = 0;
 char sr_exec_path[] = "/usr/local/lib/sr/srx";
 
-int N_hello = 0;  extern void R_hello(), F_hello();
+int N_philo = 0;  extern void R_philo(), F_philo();
 int N_philosophes = 1;  extern void R_philosophes(), F_philosophes();
 
 Rpat sr_rpatt[] = {
-    { "hello", R_hello, F_hello },
+    { "philo", R_philo, F_philo },
     { "philosophes", R_philosophes, F_philosophes },
 };
 int sr_num_rpats = 2;

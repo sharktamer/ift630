@@ -1,6 +1,6 @@
 # 0 /home/yo/Desktop/uni/ift630/devoir1/philosopheMoniteur.sr 9+
 
 global philosophes
- type etatPossible = enum ( pense , afaim , mange )
- const yo := 777
+ type etatPossible = enum ( PENSE , AFAIM , MANGE )
+ op prendre ( i : int ) , deposer ( i : int ) , test ( k : int )
  body philosophes ; ; end ;
