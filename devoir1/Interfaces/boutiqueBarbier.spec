@@ -1,3 +1,3 @@
-# 0 /home/yo/Desktop/uni/ift630/devoir1/barbierSemaphore.sr 1+
+# 0 /home/yo/Desktop/uni/ift630/devoir1/barbierMoniteur.sr 94+
 
 resource boutiqueBarbier ( ) ; end ;

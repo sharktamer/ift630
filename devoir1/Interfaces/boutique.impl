@@ -1,0 +1,13 @@
+#  global boutique
+#  from   /home/yo/Desktop/uni/ift630/devoir1/barbierMoniteur.sr
+
+p  appelerClient
+p  ouvrirPorte
+p  fermerPorte
+p  deplacer
+p  arreter
+p  clientArrive
+p  attendreTour
+p  signalerPret
+p  attendrePorte
+p  sortir

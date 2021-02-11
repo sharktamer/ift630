@@ -34,7 +34,7 @@ resource boutiqueBarbier()
        P(porteSortie)
        write("La porte de sortie est ferme")
        P(deplacement)
-       write("Le barbier est devant sa chaise")
+       write("Le barbier retourne devant sa chaise")
        nap(5)
        V(deplacement)
 
