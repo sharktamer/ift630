@@ -15,8 +15,4 @@ resource philo()
        j++
      od
   end
-  #begin
-  #  co (i := 5 to 5) phil(i)
-  #  oc
-  #end
 end
