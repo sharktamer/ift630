@@ -2,5 +2,5 @@
 
 global philosophes
  type etatPossible = enum ( PENSE , AFAIM , MANGE )
- op prendre ( i : int ) , deposer ( i : int ) , test ( k : int )
+ op prendre ( i : int ) , deposer ( i : int )
  body philosophes ; ; end ;
