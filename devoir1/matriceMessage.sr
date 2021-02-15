@@ -1,3 +1,59 @@
 resource matrice()
-write("yo")
+  const nbWorkers := 10
+  const L := 5
+  const C := 5
+  op taille(n:int)
+  op calcul(l, c:int ; ligne[1:*], col[1:*]:int)
+  op resultat(l, c, r:int)
+  op calculateur(mat1[L, 1:*], mat2[1:*, C]:int) returns mat3[L,C]:int
+
+  process worker(i := 1 to nbWorkers)
+    var l, c, r, n:int
+    receive taille(n)
+    var ligne[1:n], col[1:n]:int
+    do true ->
+      receive calcul(l, c, ligne, col)
+      r := 0
+      fa j:= lb(ligne) to ub(ligne) ->
+        r+:= ligne[j] * col[j]
+      af
+      send resultat(l, c, r)
+    od
+  end
+
+  proc calculateur(mat1, mat2) returns mat3
+    var n:= ub(mat2)
+    fa i := 1 to nbWorkers -> send taille(n) af
+    fa i := 1 to L, j := 1 to C ->
+      send calcul(i, j, mat1[i,1:*], mat2[1:*,j])
+    af
+    var l, c, r:int
+    fa i := 1 to L, j := 1 to C ->
+      receive resultat(l, c, r)
+      mat3[l,c] := r
+    af
+  end
+
+  procedure test()
+    var A[L, 4]:int
+    var B[4, C]:int
+    var R[L, C]:int
+
+    fa i := 1 to L, j := 1 to 4 ->
+      A[i, j] := 2
+    af
+
+    fa i := 1 to 4, j := 1 to C ->
+      B[i, j] := 1
+    af
+
+    R := calculateur(A, B)
+
+    fa i := 1 to L, j := 1 to C ->
+      write(R[i,j])
+    af
+  end
+
+  test()
+
 end

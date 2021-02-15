@@ -19,8 +19,10 @@ int sr_async_flag = 0;
 char sr_exec_path[] = "/usr/local/lib/sr/srx";
 
 int N_philo = 0;  extern void R_philo(), F_philo();
+int N_gestio = 1;  extern void R_gestio(), F_gestio();
 
 Rpat sr_rpatt[] = {
     { "philo", R_philo, F_philo },
+    { "gestio", R_gestio, F_gestio },
 };
-int sr_num_rpats = 1;
+int sr_num_rpats = 2;

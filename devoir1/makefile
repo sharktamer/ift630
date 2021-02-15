@@ -5,6 +5,9 @@ clean:
 	rm philosopheMoniteur
 	rm barbierSemaphore
 	rm barbierMoniteur
+test1:
+	sr -o test test.sr
+	./test
 
 semaphore1:
 	sr -o philosopheSemaphore philosopheSemaphore.sr

@@ -1,28 +1,107 @@
-resource philo()
-  op 
+global gestio
+  op notify(i:int), waitPhilo(i:int), gestionnaire()
 
-  process gestionnaire(i := 1 to 5)
+body gestio()
+  op philToGest(i:int), gestToPhil(i:int), gestToGest(i, j:int)
+  op waitGest(i, j, k:int) returns source:int, waitMange(dest, gauche, droite:int)
+  type etatPossible = enum (PENSE, AFAIM, MANGE)
+  var etat[5]: etatPossible := ([5] PENSE)
 
-
+  proc notify(i)
+    send philToGest(i)
   end
 
+  proc waitPhilo(i)
+    var k:=0
+    do k != i ->
+      receive gestToPhil(k)
+      if (k != i) -> send gestToPhil(k) fi
+    od
+  end
+
+  proc waitGest(i, j, k) returns source
+    source := 0
+    var dest := 0
+    do not ((source = i or source = j) and dest = k) ->
+      receive gestToGest(source, dest)
+      if not ((source = i or source = j) and dest = k)  -> send gestToGest(source, dest) fi
+    od
+  end
+
+  proc waitMange(dest, gauche, droite)
+      var pretGauche := 0
+      var pretDroite := 0
+      var source := 0
+      do pretGauche != gauche or pretDroite != droite ->
+        source := waitGest(gauche, droite, dest)
+        if (source = gauche) -> pretGauche := source
+        [] (source = droite) -> pretDroite := source
+        fi
+      od
+      etat[dest] := MANGE
+      send gestToPhil(dest)
+  end
+
+ proc gestionnaire()
+    var i := 0
+    var k := 0
+
+      receive philToGest(i)
+      if (etat[i] = PENSE) ->
+        etat[i] := AFAIM
+        var droite := 0
+        var gauche := 0
+        k := i mod 5 +1
+        if (etat[k] != PENSE) -> droite := k fi
+        k := (i-2) mod 5 +1
+        if (etat[k] != PENSE) -> gauche := k fi
+
+        co
+          waitMange(i, gauche, droite) //
+          gestionnaire()
+        oc
+        write("philosophe", i, "attend pour manger")
+
+      [] (etat[i] = MANGE) ->
+        etat[i] := PENSE
+        k := i mod 5 +1
+        if (etat[k] = AFAIM) -> send gestToGest(i, k) fi
+        k := (i-2) mod 5 +1
+        if (etat[k] = AFAIM) -> send gestToGest(i, k) fi
+      fi
+      gestionnaire()
+    end
+
+end
+
+
+
+resource philo()
+  import gestio
+
   process phil(i := 1 to 5)
+    #var waitGestion:cap gestio.waitPhilo
+    #var notifyGestion:cap gestio.notify
+    #waitGestion := create gestio.waitPhilo(i)
+    #notifyGestion := create notify(i)
+
      var j := 0
      do j < 10 ->
 
-       P(baguette[i])
-       P(baguette[(i) mod 5 +1])
+       write("Philosophe", i, "pense")
+       nap(int(random()*300))
+
+       write("Philosophe", i, "a faim")
+       gestio.notify(i)
+       gestio.waitPhilo(i)
 
        write("Philosophe", i, "mange")
-       nap(100)
-
-       V(baguette[i])
-       V(baguette[(i) mod 5 +1])
-
-       write("Philosophe", i, "pense")
-       nap(300)
+       nap(int(random()*100))
+       gestio.notify(i)
        j++
      od
   end
+
+  gestio.gestionnaire()
 
 end

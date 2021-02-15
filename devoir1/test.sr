@@ -1,11 +1,7 @@
-resource philo()
-
-	op test(i:int)
-  process phil(i := 1 to 2)
-		var x:int := 0
-		receive test(x)
-		write(i, x)
-  end
-	send test(1)
-	send test(3)
+resource test()
+	process wait
+		write("yo")
+	end
+	process wait
+	end
 end

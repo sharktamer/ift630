@@ -1,0 +1,6 @@
+#  global gestio
+#  from   /home/yo/Desktop/uni/ift630/devoir1/philosopheMessage.sr
+
+p  notify
+p  waitPhilo
+p  gestionnaire
