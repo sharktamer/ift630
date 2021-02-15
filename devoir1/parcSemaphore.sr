@@ -1,0 +1,51 @@
+resource parc()
+  const C := 5
+  const N := 16
+
+  var nbPassagers := 0
+
+  sem embarquement := C
+  sem debarquement := 0
+  sem vide := 1
+  sem plein := 0
+
+  process voiture
+    do true ->
+      write("Voiture prete pour l'embarquement")
+      P(plein)
+      P(vide)
+      write("Debut des 5 tours de piste")
+      fa i := 1 to 5 -> nap(100) af
+      write("Fin des tours, signal du debarquement aux passagers")
+      fa i := 1 to C -> V(debarquement) af
+      write("Attente que tous les passagers soient debarque")
+      P(vide)
+      fa i := 1 to C -> V(embarquement) af
+      V(vide)
+    od
+  end
+
+
+  process passager(i := 1 to N)
+     var j := 0
+     do j < 10 ->
+        write("Passager", i, "attend pour embarquer")
+        P(embarquement)
+        nbPassagers++
+        write("Passager", i, "dans la voiture")
+        if (nbPassagers = C) ->
+          write("Voiture pleine")
+          V(plein)
+        fi
+        P(debarquement)
+        nbPassagers--
+        if (nbPassagers = 0) ->
+          write("Voiture vide")
+          V(vide)
+        fi
+        j++
+     od
+  end
+
+
+end

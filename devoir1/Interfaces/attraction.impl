@@ -1,0 +1,7 @@
+#  global attraction
+#  from   /home/yo/Desktop/uni/ift630/devoir1/parcMoniteur.sr
+
+p  demarrer
+p  terminer
+p  embarquer
+p  debarquer

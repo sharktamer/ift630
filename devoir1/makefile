@@ -26,3 +26,24 @@ moniteur2:
 	m2sr barbierMoniteur.m
 	sr -o barbierMoniteur barbierMoniteur.sr
 	./barbierMoniteur
+
+semaphore3:
+	sr -o parcSemaphore parcSemaphore.sr
+	./parcSemaphore
+
+moniteur3:
+	m2sr parcMoniteur.m
+	sr -o parcMoniteur parcMoniteur.sr
+	./parcMoniteur
+
+message1:
+	sr -o philosopheMessage philosopheMessage.sr
+	./philosopheMessage
+
+message2:
+	sr -o barbierMessage barbierMessage.sr
+	./barbierMessage
+
+message4:
+	sr -o matriceMessage matriceMessage.sr
+	./matriceMessage

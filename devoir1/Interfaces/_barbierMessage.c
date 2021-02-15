@@ -1,4 +1,4 @@
-/* srl info for test */
+/* srl info for barbierMessage */
 
 #include "/usr/local/lib/sr/srmulti.h"
 #include "/usr/local/lib/sr/sr.h"
@@ -18,9 +18,9 @@ int sr_stack_size = 40000;
 int sr_async_flag = 0;
 char sr_exec_path[] = "/usr/local/lib/sr/srx";
 
-int N_philo = 0;  extern void R_philo(), F_philo();
+int N_barbier = 0;  extern void R_barbier(), F_barbier();
 
 Rpat sr_rpatt[] = {
-    { "philo", R_philo, F_philo },
+    { "barbier", R_barbier, F_barbier },
 };
 int sr_num_rpats = 1;

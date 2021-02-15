@@ -1,0 +1,3 @@
+resource barbier()
+write("yo")
+end

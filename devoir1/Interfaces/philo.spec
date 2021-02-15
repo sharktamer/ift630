@@ -1,3 +1,3 @@
-# 0 /home/yo/Desktop/uni/ift630/devoir1/philosopheMoniteur.sr 41+
+# 0 /home/yo/Desktop/uni/ift630/devoir1/test.sr 1+
 
 resource philo ( ) ; end ;

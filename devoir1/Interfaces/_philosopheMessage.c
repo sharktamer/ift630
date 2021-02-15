@@ -1,4 +1,4 @@
-/* srl info for test */
+/* srl info for philosopheMessage */
 
 #include "/usr/local/lib/sr/srmulti.h"
 #include "/usr/local/lib/sr/sr.h"

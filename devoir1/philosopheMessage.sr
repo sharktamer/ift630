@@ -1,3 +1,28 @@
 resource philo()
+  op 
+
+  process gestionnaire(i := 1 to 5)
+
+
+  end
+
+  process phil(i := 1 to 5)
+     var j := 0
+     do j < 10 ->
+
+       P(baguette[i])
+       P(baguette[(i) mod 5 +1])
+
+       write("Philosophe", i, "mange")
+       nap(100)
+
+       V(baguette[i])
+       V(baguette[(i) mod 5 +1])
+
+       write("Philosophe", i, "pense")
+       nap(300)
+       j++
+     od
+  end
 
 end

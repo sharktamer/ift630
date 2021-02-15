@@ -1,4 +1,4 @@
-/* srl info for test */
+/* srl info for parcMoniteur */
 
 #include "/usr/local/lib/sr/srmulti.h"
 #include "/usr/local/lib/sr/sr.h"
@@ -18,9 +18,11 @@ int sr_stack_size = 40000;
 int sr_async_flag = 0;
 char sr_exec_path[] = "/usr/local/lib/sr/srx";
 
-int N_philo = 0;  extern void R_philo(), F_philo();
+int N_parc = 0;  extern void R_parc(), F_parc();
+int N_attraction = 1;  extern void R_attraction(), F_attraction();
 
 Rpat sr_rpatt[] = {
-    { "philo", R_philo, F_philo },
+    { "parc", R_parc, F_parc },
+    { "attraction", R_attraction, F_attraction },
 };
-int sr_num_rpats = 1;
+int sr_num_rpats = 2;
