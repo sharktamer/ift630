@@ -1,3 +1,3 @@
-# 0 /home/yo/Desktop/uni/ift630/devoir1/barbierMoniteur.sr 94+
+# 0 /home/yo/Desktop/uni/ift630/devoir1/barbierMessage.sr 1+
 
 resource boutiqueBarbier ( ) ; end ;

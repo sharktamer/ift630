@@ -1,3 +1,132 @@
-resource barbier()
-write("yo")
+resource boutiqueBarbier()
+
+  const NBPLACES:int := 5
+  const TOTALCLIENT:int := 10
+  type request = enum (APPEL, ARRIVE, DEPLACEMENT, FIN_DEPLACEMENT)
+  op requeteGestion(r:request), reveil(), assis(), porte(), prochain(), occupationSalle(i:int), peutDeplacer(), disponibiliteSalle(i:int), sorti()
+
+  process gestion
+    var requete:request
+    var nbClientsAttente:int := 0
+    var nbPersonnesAttenteDeplacement:int := 0
+    var deplacementEnCours:bool := false
+    var barbierDort:bool := false
+    do true ->
+      receive requeteGestion(requete)
+      if (requete = APPEL) ->
+        send occupationSalle(nbClientsAttente)
+        if (nbClientsAttente = 0) -> barbierDort := true
+        [] else -> nbClientsAttente--
+        fi
+      [] (requete = ARRIVE) ->
+        if (barbierDort) ->
+          barbierDort := false
+          send disponibiliteSalle(0)
+        [] (nbClientsAttente >= NBPLACES) -> send disponibiliteSalle(-1)
+        [] else ->
+          nbClientsAttente++
+          send disponibiliteSalle(1)
+        fi
+      [] (requete = DEPLACEMENT) ->
+        if (deplacementEnCours) -> nbPersonnesAttenteDeplacement++
+        [] else ->
+          deplacementEnCours := true
+          send peutDeplacer()
+        fi
+      [] (requete = FIN_DEPLACEMENT) ->
+        if(nbPersonnesAttenteDeplacement > 0) ->
+          send peutDeplacer()
+          nbPersonnesAttenteDeplacement--
+        [] else -> deplacementEnCours := false
+        fi
+      fi
+    od
+  end
+
+
+
+  process barbier
+     do true ->
+      var nbClientsSalle:int
+
+      send requeteGestion(APPEL)
+      receive occupationSalle(nbClientsSalle)
+      if (nbClientsSalle = 0) ->
+        write("Le barbier dort")
+        receive reveil()
+      [] else ->
+        write("Le barbier appel le prochain client")
+        send prochain()
+      fi
+
+      receive assis()
+      write("Barbier travaille")
+      nap(int(random(1)*400))
+
+      send requeteGestion(DEPLACEMENT)
+      write("Le barbier attend pour ouvrir la porte")
+      receive peutDeplacer()
+      nap(5)
+      send requeteGestion(FIN_DEPLACEMENT)
+
+      write("Le barbier ouvre la porte")
+      send porte()
+      receive sorti()
+      write("Le barbier ferme la porte")
+
+      send requeteGestion(DEPLACEMENT)
+      write("Le barbier attend pour retourner devant sa chaise")
+      receive peutDeplacer()
+      nap(5)
+      send requeteGestion(FIN_DEPLACEMENT)
+
+      write("Le barbier attend devant sa chaise")
+     od
+  end
+
+  process client(i := 1 to TOTALCLIENT)
+     var j := 0
+     var dispoSalle:int
+     do j < 10 ->
+       nap(int(random(1)*1000))
+       write("Le client", i, "arrive")
+       requeteGestion(ARRIVE)
+       receive disponibiliteSalle(dispoSalle)
+
+
+       if (dispoSalle = 0) ->
+         send reveil()
+         write("Le client", i, "reveille le barbier")
+       [](dispoSalle < 0) ->
+         write("La boutique est pleine, le client", i, "part")
+         next
+        [](dispoSalle > 0) ->
+          send requeteGestion(DEPLACEMENT)
+          receive peutDeplacer()
+          write("Le client", i, "se deplace vers une chaise de la salle d'attente")
+          nap(5)
+          send requeteGestion(FIN_DEPLACEMENT)
+          write("Le client", i, "attend son tour sur une chaise dans la salle d'attente")
+          receive prochain()
+       fi
+
+       send requeteGestion(DEPLACEMENT)
+       receive peutDeplacer()
+       write("Le client", i, "se deplace vers la chaise du barbier")
+       nap(5)
+       send requeteGestion(FIN_DEPLACEMENT)
+       send assis()
+       write("Le client", i, "est assis sur la chaise du barbier")
+
+       receive porte()
+       send requeteGestion(DEPLACEMENT)
+       receive peutDeplacer()
+       write("Le client", i, "sort de la boutique")
+       nap(5)
+       send requeteGestion(FIN_DEPLACEMENT)
+       send sorti()
+
+       j++
+     od
+  end
 end

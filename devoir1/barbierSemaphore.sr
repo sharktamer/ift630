@@ -1,7 +1,6 @@
 resource boutiqueBarbier()
   const nbPlaces:int := 5
 
-  #sem baguette[5] := ([5] 1)
   sem reveil := 0
   sem deplacement := 1
   sem clientPret := 0
@@ -88,49 +87,3 @@ resource boutiqueBarbier()
     od
   end
 end
-
-
-/***********************************
-Ressource a partager : Deplacement dans la boutique (1 seul peut detenir en meme temps)
-Synchronisation :
-  - Barbier attend Client chaise
-  - Client attend Barbier coupe
-  - Client attend Barbier ouverture porte
-  - Client attend
-
-
-2 Portes Une entrée une sortie
-une seule personne deplacement en meme temps
-
-Actions possibles du barbier :
-Dormir, [Salle vide]
-Couper, [Lorsque client est assis sur la chaise du barbier]
-Ouvrir Porte Sortie, [Coupe terminé]
-
-Actions possibles du client
-Entrer, [Salle ne doit pas etre pleine]
-S'asseoir chaise salle attente,
-S'asseoir chaise barbier
-Quitter,
-
-Barbier {
--> Suivant (si personne, donc [Attend Client])
-Attendre client [Salle vide]
-quand client Assis Chaise
-Coupe cheveu
-Attendre client sortie
-}
-
-Client {
-Entrer (si plein part, sinon rentre)
-Chaise libre alors s'assoit pour coupe
--> sinon salle d'attente
-
-Quand assis chaise barbier indique au barbier
--> Attend
-->Indique sortie
-}
-
-
-
-*************************************/

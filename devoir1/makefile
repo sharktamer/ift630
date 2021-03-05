@@ -1,10 +1,15 @@
 clean:
 	@echo "Suppression des executable"
-	rm test
-	rm philosopheSemaphore
-	rm philosopheMoniteur
-	rm barbierSemaphore
-	rm barbierMoniteur
+	rm -f test
+	rm -f philosopheSemaphore
+	rm -f philosopheMoniteur
+	rm -f philosopheMessage
+	rm -f barbierSemaphore
+	rm -f barbierMoniteur
+	rm -f barbierMessage
+	rm -f parcSemaphore
+	rm -f parcMoniteur
+	rm -f matriceMessage
 test1:
 	sr -o test test.sr
 	./test

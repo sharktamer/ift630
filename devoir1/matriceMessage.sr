@@ -39,10 +39,13 @@ resource matrice()
     var B[4, C]:int
     var R[L, C]:int
 
+    write("Creation des 2 matrices de depart.")
+    write("A est de taille 5 lignes par 4 colonnes, ses valeurs sont toutes 2.")
     fa i := 1 to L, j := 1 to 4 ->
       A[i, j] := 2
     af
 
+    write("B est de taille 4 lignes par 5 colonnes, ses valeurs sont toutes 1.")
     fa i := 1 to 4, j := 1 to C ->
       B[i, j] := 1
     af
@@ -52,6 +55,7 @@ resource matrice()
     fa i := 1 to L, j := 1 to C ->
       write(R[i,j])
     af
+    write("A multiplie par B donne une matrice 5X5 qui a toutes ses valeurs a 8")
   end
 
   test()

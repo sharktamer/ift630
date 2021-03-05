@@ -1,0 +1,20 @@
+Equipe : 
+Simon Bergeron
+Mathieu Morissette
+
+Compilation et execution des programmes :
+Se compile et s'execute toutes facilement avec les commandes make suivante:
+
+make [COMMANDE]
+
+Liste des COMMANDE:
+clean : supprime les executables
+semaphore1 : probleme philosophes avec semaphores
+semaphore2 : probleme barbier avec semaphore 
+semaphore3 : probleme parc attraction avec sempahore
+moniteur1 : philosophe moniteur
+moniteur2 : barbier moniteur
+moniteur3 : parc attraction moniteur
+message1 : philosophe message
+message2 : barbier message
+message4 : matrice message

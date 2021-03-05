@@ -18,9 +18,9 @@ int sr_stack_size = 40000;
 int sr_async_flag = 0;
 char sr_exec_path[] = "/usr/local/lib/sr/srx";
 
-int N_barbier = 0;  extern void R_barbier(), F_barbier();
+int N_boutiqueBarbier = 0;  extern void R_boutiqueBarbier(), F_boutiqueBarbier();
 
 Rpat sr_rpatt[] = {
-    { "barbier", R_barbier, F_barbier },
+    { "boutiqueBarbier", R_boutiqueBarbier, F_boutiqueBarbier },
 };
 int sr_num_rpats = 1;
