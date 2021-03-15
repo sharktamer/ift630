@@ -1,0 +1,5 @@
+g++ -W -Wall -std=c++11 -fPIC  -m64  -I/usr/local/cuda/include -DUNIX -O3  -o mulMat   mulMat.cpp  -L/usr/local/cuda/lib64/ -lOpenCL
+echo "fin compilation......................................\n"
+echo ".....................................................\n\n"
+
+

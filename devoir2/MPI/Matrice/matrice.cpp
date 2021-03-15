@@ -86,14 +86,14 @@ int master_io()
     }
 
     int bufSlave[3];
-    double result[1];
+    double result;
     int received = 0;
     while(received < NB_LIGNES_A * NB_COLONNES_B){
 
       MPI_Recv(bufSlave, 3, MPI_INT, MPI_ANY_SOURCE, 0, MPI_COMM_WORLD, &status);
-      MPI_Recv(result, 1, MPI_DOUBLE, bufSlave[2], 0, MPI_COMM_WORLD, &status);
+      MPI_Recv(&result, 1, MPI_DOUBLE, bufSlave[2], 0, MPI_COMM_WORLD, &status);
       received++;
-      C[bufSlave[0]][bufSlave[1]] = result[0];
+      C[bufSlave[0]][bufSlave[1]] = result;
 
       if(sent < NB_LIGNES_A * NB_COLONNES_B){
         bufCoords[0] = nextI;
@@ -144,7 +144,7 @@ int slave_io(int rank)
     int bufCoords[2];
     double bufLigne[NB_COLONNES_A];
     double bufColonne[NB_COLONNES_A];
-    double result[1];
+    double result;
 
     while(true){
       MPI_Recv(bufCoords, 2, MPI_INT, 0, 0, MPI_COMM_WORLD, &status);
@@ -153,16 +153,16 @@ int slave_io(int rank)
       MPI_Recv(bufColonne, NB_COLONNES_A, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD, &status);
 
 
-      result[0] = 0;
+      result = 0;
       for(int i = 0; i < NB_COLONNES_A; i++){
-        result[0] += bufLigne[i] * bufColonne[i];
+        result += bufLigne[i] * bufColonne[i];
       }
 
       bufAnswer[0] = bufCoords[0];
       bufAnswer[1] = bufCoords[1];
       bufAnswer[2] = rank;
       MPI_Send(bufAnswer, 3, MPI_INT, 0, 0, MPI_COMM_WORLD);
-      MPI_Send(result, 1, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD);
+      MPI_Send(&result, 1, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD);
 
     }
 

@@ -1,0 +1,4 @@
+g++ -W -Wall -std=c++11 -fPIC -m64 -I/usr/local/cuda-7.5/include  -DUNIX -O3  -o test  test.cpp  -L/usr/local/cuda/lib64/ -lOpenCL
+echo "fin compilation......................................\n"
+echo ".....................................................\n\n"
+
